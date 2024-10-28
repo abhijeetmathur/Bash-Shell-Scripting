@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Function to compress a directory
+compress_directory() {
+    local dir_to_compress=$1
+    local backup_folder=$2
+
+    # Get current date and time
+    local current_datetime=$(date +"%Y-%m-%d_%H-%M-%S")
+
+    # Create the tar file name using the directory name and current date/time
+    local tar_file="${dir_to_compress}_backup_${current_datetime}.tar.gz"
+
+    # Compress the directory
+    tar -czf "$tar_file" "$dir_to_compress"
+
+    echo "Directory '$dir_to_compress' has been compressed into '$tar_file'."
+
+    # Move the tar file to the backup folder
+    if [ ! -d "$backup_folder" ]; then
+        mkdir -p "$backup_folder"
+    fi
+
+    mv "$tar_file" "$backup_folder"
+
+    echo "Backup file '$tar_file' has been moved to '$backup_folder'."
+}
+
+# Main script
+read -p "Enter the directory to back up: " dir_to_compress
+read -p "Enter the backup folder: " backup_folder
+
+# Check if the directory exists
+if [ -d "$dir_to_compress" ]; then
+    compress_directory "$dir_to_compress" "$backup_folder"
+else
+    echo "Directory '$dir_to_compress' does not exist."
+fi
