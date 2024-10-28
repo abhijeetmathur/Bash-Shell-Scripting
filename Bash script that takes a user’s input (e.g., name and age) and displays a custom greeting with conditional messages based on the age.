@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Function to display a custom greeting
+greet_user() {
+    local name=$1
+    local age=$2
+
+    echo "Hello, $name!"
+
+    if ((age < 18)); then
+        echo "You're quite young! Enjoy your youth."
+    elif ((age >= 18 && age < 30)); then
+        echo "Welcome to adulthood! It's a great time to explore."
+    elif ((age >= 30 && age < 50)); then
+        echo "You're in the prime of your life! Keep striving for success."
+    else
+        echo "You're full of wisdom and experience! Keep inspiring others."
+    fi
+}
+
+# Get user's input
+read -p "Enter your name: " name
+read -p "Enter your age: " age
+
+# Call the function with the provided inputs
+greet_user "$name" "$age"
